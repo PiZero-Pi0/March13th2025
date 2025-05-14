@@ -1,0 +1,99 @@
+ {  
+   "model_name": "GPi04N_Pi04_Model",  
+   "description": "This model integrates the GPi04N concept with unified gravitational modulation and Navier–Stokes dynamics. It allows separate gravitational parameters for fluid and water and adjustment of the pipe dynamics view.",  
+   "parameters": {  
+     "fluid": {  
+       "gravitational_parameter_fluid": {  
+         "description": "Controls the gravitational modulation for the fluid outside the pipe.",  
+         "type": "number",  
+         "default": 1.0  
+       },  
+       "GPi04N_factor": {  
+         "description": "Scaling factor for the GPi04N network influence on fluid dynamics.",  
+         "type": "number",  
+         "default": 1.0  
+       },  
+       "noise_intensity": {  
+         "description": "Magnitude of added noise/disturbances to the fluid flow.",  
+         "type": "number",  
+         "default": 0.05  
+       }  
+     },  
+     "water": {  
+       "gravitational_parameter_water": {  
+         "description": "Controls the gravitational modulation specific to water dynamics.",  
+         "type": "number",  
+         "default": 1.0  
+       }  
+     },  
+     "pipe": {  
+       "pipe_active": {  
+         "description": "Flag to apply the physics of a pipe (true) or view as free fluid (false).",  
+         "type": "boolean",  
+         "default": true  
+       },  
+       "pipe_dynamics": {  
+         "description": "Parameters that govern the pipe dynamics: roughness, friction factor, etc.",  
+         "type": "object",  
+         "properties": {  
+           "roughness": {  
+             "description": "Pipe inner surface roughness.",  
+             "type": "number",  
+             "default": 0.001  
+           },  
+           "friction_factor": {  
+             "description": "Friction factor for pipe flow.",  
+             "type": "number",  
+             "default": 0.02  
+           }  
+         }  
+       }  
+     },  
+     "navier_stokes": {  
+       "stability_limit": {  
+         "description": "The threshold at which the Navier-Stokes equations begin to blow up, indicating turbulence or instability.",  
+         "type": "number",  
+         "default": 1e5  
+       },  
+       "graded_transition": {  
+         "description": "Transition factor that controls the graded approach to summing fluid contributions against the base Navier-Stokes line.",  
+         "type": "number",  
+         "default": 0.5  
+       }  
+     },  
+     "conversion": {  
+       "reduce_to_Pi04": {  
+         "description": "When true, the model converts down to Pi04=1, representing a normalized state of the fluid (e.g. free fluid without gravitational modulation).",  
+         "type": "boolean",  
+         "default": false  
+       }  
+     }  
+   },  
+   "output": {  
+     "visualize_pipe": {  
+       "description": "When true, the resulting simulation will display the pipe geometry effects; when false, only free fluid results are shown.",  
+       "type": "boolean",  
+       "default": true  
+     },  
+     "pressure_profile": {  
+       "description": "Simulated pressure profile along the pipe or fluid domain.",  
+       "type": "array",  
+       "items": {  
+         "type": "number"  
+       }  
+     },  
+     "velocity_field": {  
+       "description": "2D array representing the velocity field in the simulation domain.",  
+       "type": "array",  
+       "items": {  
+         "type": "array",  
+         "items": {"type": "number"}  
+       }  
+     },  
+     "turbulence_indicator": {  
+       "description": "A computed value representing the turbulence intensity in the fluid flow system.",  
+       "type": "number"  
+     }  
+   },  
+   "notes": "Adjust the parameters dynamically to see when the system exceeds the stable Navier-Stokes line (blow up) or remains in a graded, stable state. This model can be used both for simulating pipe dynamics and free fluid conditions, with conversion via the reduce_to_Pi04 parameter."  
+ }  
